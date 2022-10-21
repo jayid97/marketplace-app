@@ -1,22 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Rating;
+use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RatingController extends Controller
+class AdminRatingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rating = Rating::where('buyer_id', Auth::user()->id)->orWhere('seller_id', Auth::user()->id)->paginate(3);
-        return view('rating.index', compact('rating'));
+        $query = Rating::query();
+        if($request->search)
+        {
+            $query->where(function($q) use ($request){
+                $q->where('id', 'LIKE', "%". $request->search. "%");
+                $q->orWhere('star', 'LIKE', "%". $request->search. "%");
+            });
+        }
+        $rating = $query->orderBy('created_at')->paginate(15);
+        return View('admin.rating.index', compact('rating'));
     }
 
     /**
@@ -60,8 +70,6 @@ class RatingController extends Controller
     public function edit(Rating $rating)
     {
         //
-
-        return view('rating.edit', compact('rating'));
     }
 
     /**
@@ -74,12 +82,6 @@ class RatingController extends Controller
     public function update(Request $request, Rating $rating)
     {
         //
-
-        $rating->update([
-            'star' => $request->rating,
-            'comment' => $request->comment
-        ]);
-        return redirect(route('ratings.index'))->withStatus('Comment Success');
     }
 
     /**

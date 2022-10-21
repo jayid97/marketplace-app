@@ -2,13 +2,24 @@
 
 @section('body')
 
+<style>
+.card-image {
+  height: 300px
+}
+</style>
+
+<form action="{{route('home')}}" class="d-flex my-4">
+<input type="text" name="search" placeholder="search name" class="flex-grow-1 form-control" value="{{request()->search}}">
+<button class="btn btn-primary"><i class="fas fa-search"></i></button>
+<a class="btn" href="{{route('home')}}">Reset</a>
+</form>
 
 <div class="container mt-2 mb-2">
     <div class="row">
         @foreach($items as $i)
         <div class="col-md-3 col-sm-2 col-xs-2">
             <div class="card">
-                <img src="{{url('storage/images/items/'.$i->image_name)}}" class="card-img-top " style="height: 300px; object-fit:cover;" />
+                <img src="{{url('storage/images/items/'.$i->image_name)}}" class="card-image"/>
                 <div class="card-body">
                     <h5 class="card-title">
                         <div class="row">
@@ -20,7 +31,7 @@
                             </div>
                         </div>
                     </h5>
-                    <p class="card-text">{{$i->description}}</p>
+                    <p class="card-text">{{Str::limit($i->description, 15) }}</p>
                     <div class="row mt-2">
                         <a href="{{route('product', $i->id)}}" class="btn btn-primary">View</a>
                     </div>

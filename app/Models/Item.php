@@ -30,6 +30,11 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
+    function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id','id');
+    }
+
     protected $casts = [
         'payment_gateway_status' => 'json',
      ];

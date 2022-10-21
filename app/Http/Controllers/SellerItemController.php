@@ -13,9 +13,16 @@ class SellerItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::where('user_id', Auth::user()->id)->paginate(5);
+        $query = Item::query();
+        if($request->search)
+        {
+            $query->where(function($q) use ($request){
+                $q->where('name', 'LIKE', "%". $request->search. "%");
+            });
+        }
+        $items = $query->orderBy('created_at')->where('user_id', Auth::user()->id)->paginate(10);
         return view('seller.index', compact('items'));
     }
 

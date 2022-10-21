@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Rating;
+use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RatingController extends Controller
+class AdminItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rating = Rating::where('buyer_id', Auth::user()->id)->orWhere('seller_id', Auth::user()->id)->paginate(3);
-        return view('rating.index', compact('rating'));
+        //
+        $query = Item::query();
+        if($request->search)
+        {
+            $query->where(function($q) use ($request){
+                $q->where('name', 'LIKE', "%". $request->search. "%");
+                $q->orWhere('id', 'LIKE', "%". $request->search. "%");
+            });
+        }
+        $items = $query->orderBy('created_at')->paginate(15);
+        return view('admin.item.index', compact('items'));
     }
 
     /**
@@ -43,10 +52,10 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Rating $rating)
+    public function show(Item $item)
     {
         //
     }
@@ -54,41 +63,33 @@ class RatingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rating $rating)
+    public function edit(Item $item)
     {
         //
-
-        return view('rating.edit', compact('rating'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rating $rating)
+    public function update(Request $request, Item $item)
     {
         //
-
-        $rating->update([
-            'star' => $request->rating,
-            'comment' => $request->comment
-        ]);
-        return redirect(route('ratings.index'))->withStatus('Comment Success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rating $rating)
+    public function destroy(Item $item)
     {
         //
     }

@@ -21,4 +21,15 @@ class Rating extends Model
     {
         return $this->hasOne(Item::class);
     }
+
+    function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id','id');
+    }
+
+    function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id','id');
+    }
+
 }

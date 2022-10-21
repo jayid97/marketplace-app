@@ -24,6 +24,10 @@ class User extends Authenticatable
         'roles',
         'phone_number',
         'address',
+        'google_id',
+        'github_id',
+        'github_token',
+        'github_refresh_token'
     ];
 
     /**
@@ -44,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function rating()
+    {
+        return $this->hasOne(Rating::class);
+    }
 }

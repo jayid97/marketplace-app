@@ -6,12 +6,18 @@
 {!! implode('', $errors->all('<div class="alert alert-danger mt-2" role="alert">:message</div>')) !!}
 @endif
 
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
 <div class="container">
     <div class="row">
-        <div class="card mb-3 mt-3 col-md-8">
+        <div class="card mb-3 mt-3 col-md-8 shadow">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="{{url('storage/images/items/'.$items->image_name)}}" class="img-fluid rounded-start" />
+                    <img src="{{url('storage/images/items/'.$items->image_name)}}" class="img-fluid rounded-start" width="200px;" height="200px;" />
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -28,29 +34,47 @@
                         <form action="{{route('payment')}}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{$items->id}}" />
-                            <button class="btn btn-primary">Buy</button>
+                            <button class="btn btn-primary form-control">Buy</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card mb-3 mt-3 col-md-4">
+    </div>
+    <div class="row">
+        <div class="card mb-3 mt-3 col-md-6 shadow">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="{{url('storage/images/profile/user.png')}}" class="img-fluid mt-4" />
+                    <img src="{{url('storage/images/profile/user.png')}}" class="img-fluid mt-1" width="150px;" height="150px;" />
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">Owner</h5>
+                        <h5 class="card-title">Seller Info</h5>
                         <p class="card-text">
-                            <i class="fas fa-user"></i> {{$items->user->name}}
+                            Name: {{$items->user->name}}
                         </p>
-                        <p class="card-text">
-                            <i class="fas fa-location-arrow"></i> {{$items->user->address}}
-                        </p>
-                        <p class="card-text">
-                            <i class="fas fa-phone"></i> {{$items->user->phone_number}}
-                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="card-text">
+                                    @if(is_null($avg_star))
+                                <div class="badge bg-danger text-wrap">There is no rating for this seller</div>
+                                @else
+                                Ratings: {{$avg_star}} stars
+                                @endif
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="card-text">
+                                    @if($count_item == 0)
+                                <div class="badge bg-danger text-wrap">There is no product by seller</div>
+                                @else
+                                Products: {{$count_item}}
+                                @endif
+                                </p>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

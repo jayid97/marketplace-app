@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentFail;
+use App\Mail\PaymentSuccess;
 use App\Models\Item;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Omnipay\Omnipay;
 
 class PaymentController extends Controller
@@ -107,7 +110,9 @@ class PaymentController extends Controller
     public function _success(Item $item)
     {
 
-        
+        //send email
+        Mail::to(Auth::user()->email)
+            ->send(new PaymentSuccess($item));
 
         $rating = Rating::create([
             'buyer_id' => $item->user_id,
@@ -140,6 +145,9 @@ class PaymentController extends Controller
 
     public function failed(Request $request, Item $item)
     {
+         //send email
+         Mail::to(Auth::user()->email)
+         ->send(new PaymentFail($item));
         return view('payment.failed', compact('item'));
     }
 }
