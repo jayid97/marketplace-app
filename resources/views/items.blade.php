@@ -40,18 +40,16 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="card mb-3 mt-3 col-md-6 shadow">
+        <div class="card mb-3 mt-3 col-md-4 shadow">
             <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{url('storage/images/profile/user.png')}}" class="img-fluid mt-1" width="150px;" height="150px;" />
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card-body">
                         <h5 class="card-title">Seller Info</h5>
                         <p class="card-text">
                             Name: {{$items->user->name}}
+                        </p>
+                        <p class="card-text">
+                            Location: {{$items->user->address}}
                         </p>
                         <div class="row">
                             <div class="col-md-6">
@@ -73,7 +71,6 @@
                                 </p>
                             </div>
                         </div>
-
 
                     </div>
                 </div>
