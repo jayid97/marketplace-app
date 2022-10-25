@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Rating;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RatingController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,22 @@ class RatingController extends Controller
      */
     public function index()
     {
-        $rating = Rating::where('buyer_id', Auth::user()->id)->orWhere('seller_id', Auth::user()->id)->paginate(3);
-        return view('rating.index', compact('rating'));
+        //
+        $user = User::where('id', Auth::user()->id)->first();
+        $seller = Rating::where('seller_id', Auth::user()->id)->get();
+        $total_star = 0;
+        $avg_star = 0;
+
+        foreach($seller as $s)
+        {
+           $total_star += $s->star;
+           $avg_star = $total_star / count($seller);
+        }
+
+        $count_item = Item::where('user_id', Auth::user()->id)->count();
+
+        $count_comment = Rating::where('seller_id', Auth::user()->id)->orWhere('buyer_id', Auth::user()->id)->count();
+        return view('profile.index', compact('user', 'avg_star', 'count_item', 'count_comment'));
     }
 
     /**
@@ -43,10 +59,10 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Rating $rating)
+    public function show(User $user)
     {
         //
     }
@@ -54,49 +70,33 @@ class RatingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rating $rating)
+    public function edit(User $user)
     {
         //
-
-        return view('rating.edit', compact('rating'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rating $rating)
+    public function update(Request $request, User $user)
     {
         //
-        if($rating->buyer_id == Auth::user()->id)
-        {
-            $rating->update([
-                'star' => $request->rating,
-                'buyer_comment' => $request->buyer_comment,
-            ]);
-        }else{
-            $rating->update([
-                'seller_comment' => $request->seller_comment,
-            ]);
-            
-        }
-        
-        return redirect(route('ratings.index'))->withStatus('Comment Success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rating  $rating
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rating $rating)
+    public function destroy(User $user)
     {
         //
     }

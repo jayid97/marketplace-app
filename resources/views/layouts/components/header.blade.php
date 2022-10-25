@@ -26,7 +26,7 @@
         @auth
         <a class="text-reset me-3 ml-1" href="{{route('ratings.index')}}">
           <i class="fas fa-star"></i>
-          <span class="badge rounded-pill badge-notification bg-danger"></span>
+          <span class="badge rounded-pill badge-notification bg-danger">{{$count}}</span>
         </a>
 
         <!-- Notifications -->
@@ -54,7 +54,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
             <li>
-              <a class="dropdown-item" href="#">My profile</a>
+              <a class="dropdown-item" href="{{route('profiles.index')}}">My profile</a>
             </li>
             <li>
               <a class="dropdown-item" href="{{route('items.index')}}">My Items</a>

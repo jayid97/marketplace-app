@@ -40,7 +40,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
             <li>
-              <a class="dropdown-item" href="#">My profile</a>
+              <a class="dropdown-item" href="{{route('profiles.index')}}">My profile</a>
             </li>
             <li>
               <a class="dropdown-item" href="{{route('items.index')}}">My Items</a>

@@ -3,23 +3,30 @@
 @section('body')
 
 <style>
-.card-image {
-  height: 300px
-}
+    .card-image {
+        height: 300px
+    }
 </style>
 
 <form action="{{route('home')}}" class="d-flex my-4">
-<input type="text" name="search" placeholder="search name" class="flex-grow-1 form-control" value="{{request()->search}}">
-<button class="btn btn-primary"><i class="fas fa-search"></i></button>
-<a class="btn" href="{{route('home')}}">Reset</a>
+    <input type="text" name="search" placeholder="search name" class="flex-grow-1 form-control" value="{{request()->search}}">
+    <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+    <a class="btn" href="{{route('home')}}">Reset</a>
 </form>
 
 <div class="container mt-2 mb-2">
     <div class="row">
+        @if(empty($items))
+        <div class="row g-0">
+            <div class="alert alert-info" role="alert">
+                There is no item ...
+            </div>
+        </div>
+        @else
         @foreach($items as $i)
         <div class="col-md-3 col-sm-2 col-xs-2">
             <div class="card">
-                <img src="{{url('storage/images/items/'.$i->image_name)}}" class="card-image"/>
+                <img src="{{url('storage/images/items/'.$i->image_name)}}" class="card-image" />
                 <div class="card-body">
                     <h5 class="card-title">
                         <div class="row">
@@ -40,6 +47,7 @@
             </div>
         </div>
         @endforeach
+        @endif
     </div>
 </div>
 

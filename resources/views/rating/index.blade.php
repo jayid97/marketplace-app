@@ -7,7 +7,14 @@
     }
 </style>
 
-<div class="container mt-2 mb-2">
+<div class="container mt-4 mb-2 d-flex justify-content-center">
+    @if(empty($rating))
+    <div class="row g-0">
+        <div class="alert alert-info" role="alert">
+            There is no item buy by this user ...
+        </div>
+    </div>
+    @else
     @foreach($rating as $r)
     <div class="row g-0">
         <div class="card mb-3 mt-3 col-md-8">
@@ -20,7 +27,6 @@
                         <h5 class="card-title">Rating for {{$r->item->name}}</h5>
                         <div class="row">
                             <div class="col-md-12">
-                                <h5>Rating</h5>
                                 @if($r->star == 5)
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -56,15 +62,19 @@
                                 @endif
                             </div>
                         </div>
-                        <h5>Comment</h5>
+                        <h5>Comment : </h5>
                         <p class="card-text">
-                            @if(empty($r->comment))
+                            @if(empty($r->buyer_comment))
                         <div class="badge bg-danger text-wrap">No comment yet from buyer</div>
                         @else
-                        {{$r->comment}}
+                        {{$r->buyer_comment}}
                         @endif
                         </p>
-                        @if(empty($r->comment))
+                        <h5>Seller Comment : </h5>
+                        <p class="badge bg-success text-wrap">
+                        {{$r->seller_comment}}
+                        </p>
+                        @if(empty($r->buyer_comment))
                         <a href="{{route('ratings.edit', ['rating' => $r])}}" class="btn btn-primary">View</a>
                         @endif
                     </div>
@@ -74,6 +84,8 @@
 
     </div>
     @endforeach
+
+    @endif
 </div>
 {{$rating->links()}}
 

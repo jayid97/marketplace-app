@@ -12,7 +12,8 @@ class Rating extends Model
     protected $fillable = [
         'buyer_id',
         'seller_id',
-        'comment',
+        'buyer_comment',
+        'seller_comment',
         'star'
     ];
     

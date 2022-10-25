@@ -24,7 +24,7 @@ class AdminItemController extends Controller
                 $q->orWhere('id', 'LIKE', "%". $request->search. "%");
             });
         }
-        $items = $query->orderBy('created_at')->paginate(15);
+        $items = $query->orderBy('created_at')->paginate(10);
         return view('admin.item.index', compact('items'));
     }
 

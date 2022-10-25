@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SellerItemController;
 use App\Models\User;
@@ -46,6 +47,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 Route::resource('/ratings', RatingController::class)->middleware(['auth', 'verified']);
+Route::resource('/profiles', ProfileController::class)->middleware(['auth', 'verified']);
 
 Route::resource('/items', SellerItemController::class)->middleware(['auth', 'verified']);
 

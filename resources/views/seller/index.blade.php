@@ -16,7 +16,7 @@
 <button class="btn btn-primary">Search</button>
 <a class="btn" href="{{route('items.index')}}">Reset</a>
 </form>
-<a class="btn btn-primary mb-1" data-mdb-toggle="modal" href="#exampleModalToggle1" role="button">Add Items</a>
+<button class="btn btn-primary mb-1" data-mdb-toggle="modal" href="#exampleModalToggle1" role="button">Add Items</button>
 
 <!-- First modal dialog -->
 <div class="modal fade" id="exampleModalToggle1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel1" tabindex="-1">
@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-mdb-target="#exampleModalToggle22" data-mdb-toggle="modal" data-mdb-dismiss="modal">
+          <button class="btn btn-primary">
             Add Items
           </button>
         </div>
@@ -104,6 +104,11 @@
     </tr>
   </thead>
   <tbody>
+    @if(empty($items))
+    <tr>
+    <td colspan="9" class="text-center">There is no post yet by this user..</td>
+    </tr>
+    @else
     @foreach($items as $i)
     <tr>
       <td>{{$i->id}}</td>
@@ -143,6 +148,7 @@
         </div>
       </td>
       @endforeach
+      @endif
   </tbody>
 </table>
 

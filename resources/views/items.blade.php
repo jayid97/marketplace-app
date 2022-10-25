@@ -49,7 +49,11 @@
                             Name: {{$items->user->name}}
                         </p>
                         <p class="card-text">
+                            @if(empty($items->user->address))
+                            Location: No location from this seller
+                            @else
                             Location: {{$items->user->address}}
+                            @endif
                         </p>
                         <div class="row">
                             <div class="col-md-6">

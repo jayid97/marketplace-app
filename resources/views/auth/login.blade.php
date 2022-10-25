@@ -4,6 +4,9 @@
 
 <!-- Session Status -->
 {{session('status')}}
+@if($errors->any())
+{!! implode('', $errors->all('<div class="alert alert-danger mt-2" role="alert">:message</div>')) !!}
+@endif
 
 <form method="POST" action="{{ route('login') }}">
   @csrf
@@ -36,7 +39,7 @@
             <hr class="my-4">
 
             <a class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" href="{{route('google-auth')}}"><i class="fab fa-google me-2"></i> Sign in with google</a>
-            <a class="btn btn-lg btn-block btn-dark mb-2" style="background-color: #3b5998;" href="{{route('github-auth')}}"><i class="fab fa-github-square"></i>Sign in with Github</a>
+            <a class="btn btn-lg btn-block btn-dark mb-2" style="background-color: #3b5998;" href="{{route('github-auth')}}"><i class="fab fa-github-square me-2"></i>Sign in with Github</a>
           </div>
         </div>
       </div>
