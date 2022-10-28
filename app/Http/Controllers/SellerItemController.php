@@ -70,7 +70,7 @@ class SellerItemController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->back()->withStatus('Add New Service Success!');
+        return redirect()->back()->withStatus('Add New Item Success!');
     }
 
     /**

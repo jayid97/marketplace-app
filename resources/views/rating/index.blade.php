@@ -15,8 +15,8 @@
         </div>
     </div>
     @else
-    @foreach($rating as $r)
     <div class="row g-0">
+    @foreach($rating as $r)
         <div class="card mb-3 mt-3 col-md-8">
             <div class="row g-0">
                 <div class="col-md-4">
@@ -64,26 +64,40 @@
                         </div>
                         <h5>Comment : </h5>
                         <p class="card-text">
-                            @if(empty($r->buyer_comment))
+                        @if(empty($r->buyer_comment))
                         <div class="badge bg-danger text-wrap">No comment yet from buyer</div>
                         @else
                         {{$r->buyer_comment}}
                         @endif
                         </p>
                         <h5>Seller Comment : </h5>
+                        @if(empty($r->seller_comment))
+                        <div class="badge bg-danger text-wrap">No comment yet from buyer</div>
+                        @else
                         <p class="badge bg-success text-wrap">
                         {{$r->seller_comment}}
-                        </p>
-                        @if(empty($r->buyer_comment))
+                        </p> 
+                        @endif
+                        <div class="row">
+                            <div class="col">
+                            @if(empty($r->buyer_comment))
+                            <a href="{{route('ratings.edit', ['rating' => $r])}}" class="btn btn-primary">View</a>
+                            </div>
+                            <div class="col">
+                            @elseif(empty($r->seller_comment))
                         <a href="{{route('ratings.edit', ['rating' => $r])}}" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                        
+                       
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-
+        @endforeach
     </div>
-    @endforeach
+</div>
 
     @endif
 </div>

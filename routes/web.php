@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'isadmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/ratings', AdminRatingController::class);
@@ -87,4 +87,4 @@ Route::get('/auth/github/callback', function () {
     }
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
